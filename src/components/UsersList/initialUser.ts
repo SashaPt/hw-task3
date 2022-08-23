@@ -1,7 +1,7 @@
 export const initialUser = {
   "id": 13,
   "email": "",
-  "firstName": "",
-  "lastName": "",
+  "first_name": "",
+  "last_name": "",
   "avatar": ""
 }

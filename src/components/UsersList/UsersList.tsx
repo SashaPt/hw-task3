@@ -1,31 +1,58 @@
-import React, { ChangeEvent, FC, useState, useMemo, FormEvent } from 'react';
+import React, {
+  ChangeEvent,
+  FC,
+  useState,
+  useMemo,
+  FormEvent,
+  useEffect,
+} from 'react';
 import { IUser } from './IUser';
 import { initialUser } from './initialUser';
-import { USERS } from './usersData';
 import Search from '../Search/Search';
 import UserForm from '../UserForm/UserForm';
 import User from '../User/User';
 import Loader from '../Loader/Loader';
+import http from '../http';
 
 const UsersList: FC = () => {
-  const [users, setUsers] = useState<IUser[]>(USERS);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [search, setSearch] = useState('');
   const [showUserForm, setShowUserForm] = useState(false);
   const [user, setUser] = useState(initialUser);
 
-  const deleteUser = (id: number) => {
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const fetchedUsers = await http.get('users');
+      setUsers(fetchedUsers.data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const deleteUser = async (id: number) => {
     const confirmDelete = window.confirm(
       'Do you really want to delete this user?'
     );
     if (confirmDelete) {
-      setUsers(users.filter((user) => id !== user.id));
+        try {
+            const deletedUser = await http.delete(`users/${id}`);
+            if (deletedUser) {
+                setUsers(users.filter((user) => id !== user.id));
+            } 
+        } catch (e) {
+            console.log(e)
+        }
     }
   };
 
   const searchedUsers = useMemo(() => {
     if (search) {
       return users.filter((user) =>
-        user.firstName.toLowerCase().includes(search.toLowerCase())
+        user.first_name.toLowerCase().includes(search.toLowerCase())
       );
     }
     return users;
@@ -36,11 +63,18 @@ const UsersList: FC = () => {
     setUser({ ...user, [field]: event.target.value });
   };
 
-  const addUser = (event: FormEvent) => {
+  const addUser = async (event: FormEvent) => {
     event.preventDefault();
-    setUsers([...users, user]);
-    initialUser.id = initialUser.id + 1;//чтобы при добавлении следующего не было ошибки
-    setUser(initialUser);
+    try {
+      const addedUser = await http.post('users/', user);
+      if (addedUser.data) {
+        setUsers([...users, user]);
+        initialUser.id = initialUser.id + 1; //чтобы при добавлении следующего не было ошибки
+        setUser(initialUser);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -59,13 +93,13 @@ const UsersList: FC = () => {
           onChangeUserData={onChangeUserData}
         />
       )}
-      <div className="row row-cols-1 row-cols-md-5 g-4">
+      <div className="row row-cols-1 row-cols-md-4 g-4">
         {searchedUsers.length ? (
           searchedUsers.map((user) => (
             <User user={user} deleteUser={deleteUser} key={user.id} />
           ))
         ) : (
-          <Loader color='text-secondary'/>
+          <Loader color="text-secondary" />
         )}
       </div>
     </>
