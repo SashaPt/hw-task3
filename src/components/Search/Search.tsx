@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
-const Search = ({setSearch}:{setSearch:any}) => {
+const Search = ({setSearch}:{setSearch:Dispatch<SetStateAction<string>>}) => {
   return (
     <div className="input-group mb-3">
             <span className="input-group-text" id="basic-addon1">Search</span>
