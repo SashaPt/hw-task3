@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css';
-import UsersList from './Users/Users'
-
+import NavBar from './NavBar/NavBar';
+import AppRoutes from './AppRoutes';
 
 function App() {
   return (
-    <div className="App container">
-      <h1 className="mt-5">My React App</h1>
-      <UsersList/>
+    <div className="App">
+      <NavBar />
+      <div className="container">
+        <AppRoutes />
+      </div>
     </div>
   );
 }

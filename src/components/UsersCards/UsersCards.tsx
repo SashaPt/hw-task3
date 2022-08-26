@@ -4,7 +4,7 @@ import Loader from '../Loader/Loader';
 import UserCard from '../UserCard/UserCard';
 import { IUser } from '../Users/IUser';
 
-const UserCards = ({ users, setUsers }: { users: IUser[], setUsers: Dispatch<SetStateAction<IUser[]>> }) => {
+const UsersCards = ({ users, setUsers }: { users: IUser[], setUsers: Dispatch<SetStateAction<IUser[]>> }) => {
     const deleteUser = async (id: number) => {
         const confirmDelete = window.confirm(
           'Do you really want to delete this user?'
@@ -33,4 +33,4 @@ const UserCards = ({ users, setUsers }: { users: IUser[], setUsers: Dispatch<Set
   );
 };
 
-export default UserCards;
+export default UsersCards;

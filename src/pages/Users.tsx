@@ -3,13 +3,13 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { IUser } from './IUser';
-import Search from '../Search/Search';
-import UserForm from '../UserForm/UserForm';
-import http from '../../http';
-import { useSearch } from '../../hooks/useSearch';
-import UserCards from '../UsersCards/UserCards';
-import ShowFormButton from '../ShowFormButton/ShowFormButton';
+import { IUser } from '../components/Users/IUser';
+import Search from '../components/Search/Search';
+import UserForm from '../components/UserForm/UserForm';
+import http from '../http';
+import { useSearch } from '../hooks/useSearch';
+import UserCards from '../components/UsersCards/UsersCards';
+import ShowFormButton from '../components/ShowFormButton/ShowFormButton';
 
 const Users: FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
