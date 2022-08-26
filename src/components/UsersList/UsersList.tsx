@@ -2,7 +2,6 @@ import React, {
   ChangeEvent,
   FC,
   useState,
-  useMemo,
   FormEvent,
   useEffect,
 } from 'react';
@@ -12,7 +11,8 @@ import Search from '../Search/Search';
 import UserForm from '../UserForm/UserForm';
 import User from '../User/User';
 import Loader from '../Loader/Loader';
-import http from '../http';
+import http from '../../http';
+import { useSearch } from '../../hooks/useSearch';
 
 const UsersList: FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -49,14 +49,7 @@ const UsersList: FC = () => {
     }
   };
 
-  const searchedUsers = useMemo(() => {
-    if (search) {
-      return users.filter((user) =>
-        user.first_name.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-    return users;
-  }, [search, users]);
+  const searchedUsers = useSearch(users, search, 'first_name');
 
   const onChangeUserData = (event: ChangeEvent<HTMLInputElement>) => {
     const field = event.target.id;
