@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### You can now view this app in the browser:
+
+https://sashapt.github.io/main
+
 ## Functional:
 - show users,
 - create users,
