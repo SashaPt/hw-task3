@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/hw-task3/static/css/main.fe2bfb50.css",
+    "main.js": "/hw-task3/static/js/main.b32c2c2d.js",
+    "index.html": "/hw-task3/index.html",
+    "main.fe2bfb50.css.map": "/hw-task3/static/css/main.fe2bfb50.css.map",
+    "main.b32c2c2d.js.map": "/hw-task3/static/js/main.b32c2c2d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fe2bfb50.css",
+    "static/js/main.b32c2c2d.js"
+  ]
+}
