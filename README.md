@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### You can now view this app in the browser:
 
-https://sashapt.github.io/main
+https://sashapt.github.io/hw-task3/
 
 ## Functional:
 - show users,

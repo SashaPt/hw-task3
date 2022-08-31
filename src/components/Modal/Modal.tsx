@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Context from '../../context/context';
+import Login from '../Login/Login';
 
 const Modal = () => {
   const { openModal, setOpenModal } = useContext(Context);
@@ -24,7 +25,7 @@ const Modal = () => {
             ></button>
           </div>
           <div className="modal-body">
-            <p>Modal body text goes here.</p>
+            <Login/>
           </div>
           <div className="modal-footer">
             <button
