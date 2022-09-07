@@ -1,44 +1,26 @@
-import React, {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useState,
-} from 'react';
-import http from '../../http';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { useAction } from '../../hooks/useAction';
 import { initialUser } from '../Users/initialUser';
 import { IUser } from '../Users/IUser';
 
-const UserForm = ({
-  users,
-  setUsers,
-}: {
-  users: IUser[];
-  setUsers: Dispatch<SetStateAction<IUser[]>>;
-}) => {
+const UserForm = () => {
+  const { addUser } = useAction();
   const [user, setUser] = useState(initialUser);
   const onChangeUserData = (event: ChangeEvent<HTMLInputElement>) => {
     const field = event.target.id;
     setUser({ ...user, [field]: event.target.value });
   };
 
-  const addUser = async (event: FormEvent) => {
+  const addUserCard = async (event: FormEvent) => {
     event.preventDefault();
-    try {
-      const addedUser = await http.post('users/', user);
-      if (addedUser.data) {
-        setUsers([...users, user]);
-        initialUser.id = initialUser.id + 1;
-        setUser(initialUser);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    await addUser(user);
+    initialUser.id = initialUser.id + 1;
+    setUser(initialUser);
   };
   return (
     <form
       className="mb-3 bg-light p-3 w-50 mx-auto"
-      onSubmit={(event) => addUser(event)}
+      onSubmit={(event) => addUserCard(event)}
     >
       {Object.keys(user).map((field) => {
         if (field === 'id') return undefined;

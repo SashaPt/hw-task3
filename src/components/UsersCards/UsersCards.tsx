@@ -1,29 +1,18 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import http from '../../http';
+import React from 'react';
+import { useAction } from '../../hooks/useAction';
+import { useSearch } from '../../hooks/useSearch';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Loader from '../Loader/Loader';
 import UserCard from '../UserCard/UserCard';
-import { IUser } from '../Users/IUser';
 
-const UsersCards = ({ users, setUsers }: { users: IUser[], setUsers: Dispatch<SetStateAction<IUser[]>> }) => {
-    const deleteUser = async (id: number) => {
-        const confirmDelete = window.confirm(
-          'Do you really want to delete this user?'
-        );
-        if (confirmDelete) {
-            try {
-                const deletedUser = await http.delete(`users/${id}`);
-                if (deletedUser) {
-                    setUsers(users.filter((user) => id !== user.id));
-                } 
-            } catch (e) {
-                console.log(e)
-            }
-        }
-      };
+const UsersCards = ({search} : {search: string}) => {
+  const { users } = useTypedSelector((state) => state.users);
+  const { deleteUser } = useAction();
+  const searchedUsers = useSearch(users, search, 'first_name');
   return (
     <div className="row row-cols-1 row-cols-md-4 g-4">
-      {users.length ? (
-        users.map((user) => (
+      {searchedUsers.length ? (
+        searchedUsers.map((user) => (
           <UserCard user={user} deleteUser={deleteUser} key={user.id} />
         ))
       ) : (
